@@ -2,6 +2,14 @@
 
 This project analyzes player engagement and churn patterns in the Borderlands Science citizen‑science minigame using feature engineering, survival analysis (Cox models), and clustering. This repository contains a data‑preparation pipeline and a research notebook for modeling and segmentation.
 
+## Dataset and Scope
+
+**Data Selection:** This analysis focuses on a subset of players (5000 of over 4 million players) who successfully completed all 9 difficulty levels (i.e., played and completed at least one puzzle at level 9). This filtering criterion was applied to ensure analysis on experienced, committed players with sufficient gameplay data across the full difficulty spectrum. This subset provides the most reliable signal for engagement patterns and churn behavior while minimizing bias from casual players.
+
+**Timeframe:** The play logs analyzed span from April 2020 through June 2025, capturing player behavior across a significant period of citizen science participation.
+
+**Reproducibility:** The feature engineering pipeline can be readily applied to other player subsets or datasets by adjusting the filtering criteria in the initial data preprocessing steps. See the [Run the feature pipeline](#run-the-feature-pipeline) section for guidance on customizing the analysis for different player cohorts.
+
 ## What the project does
 
 This project transforms raw Borderlands Science gameplay logs into player‑level behavioral features, then applies survival analysis and clustering to characterize engagement archetypes and churn risk.
@@ -16,7 +24,8 @@ Key artifacts:
 - **Scalable engagement insights**: Convert raw play sessions into durable player‑level metrics.
 - **Churn modeling**: Cox proportional hazards modeling for survival analysis.
 - **Behavioral archetypes**: K‑means clustering to identify player profiles within the dataset.
-- **Reproducible pipeline**: Scripted feature engineering that can be re‑run on new datasets.
+- **Reproducible pipeline**: Fully scripted feature engineering that can be re‑run on new datasets or alternative player cohorts, enabling comparative analysis across different player subsets and time periods.
+- **Transparent methodology**: Clear filtering and preprocessing steps documented in code, facilitating validation and extension of results to other engagement contexts.
 
 ## Key Findings
 
@@ -46,6 +55,13 @@ Install the common libraries with pip if you prefer not to use Poetry: `pip inst
 
 **Data requirement:** The input CSV should contain raw Borderlands Science gameplay logs. This file is not included in the repository due to privacy concerns but the expected format is described below.
 
+**Data filtering for reproducibility:** Note that the current analysis uses players who completed at least one level 9 puzzle (i.e., reached the final difficulty). To adapt this pipeline for a different player subset:
+
+1. Open [player_profile.py](player_profile.py) and locate the data filtering logic
+2. Modify the filtering criteria in the preprocessing or post-processing steps (e.g., filter by `level_9_puzzles > 0` in the notebook, or adjust timeframe filters like the COVID flag)
+3. Follow the pipeline steps below with your modified dataset
+4. Document your filtering rationale to maintain reproducibility
+
 Expected CSV columns:
 
 | Column | Description |
@@ -63,10 +79,6 @@ To run the pipeline:
 
 1. Obtain the raw Borderlands Science gameplay CSV from your data source.
 2. Open [player_profile.py](player_profile.py) and set `file_path` to your CSV location.
-3. Run the script to generate:
-	- `player_profile.csv` — player-level aggregated features
-	- `player_profile_processed.csv` — transformed features ready for modeling
-	- `transformation_log.csv` — record of applied transformations
 
 ### Explore modeling and clustering
 
