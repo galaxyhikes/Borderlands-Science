@@ -44,7 +44,7 @@ Install the common libraries with pip if you prefer not to use Poetry: `pip inst
 
 ### Run the feature pipeline
 
-**Data requirement:** The input CSV should contain raw Borderlands Science gameplay logs. This file is not included in the repository due to size and is expected to be sourced from Gearbox or a research data repository.
+**Data requirement:** The input CSV should contain raw Borderlands Science gameplay logs. This file is not included in the repository due to privacy concerns but the expected format is described below.
 
 Expected CSV columns:
 
